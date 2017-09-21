@@ -11,8 +11,8 @@ func init() {
 	flag.Parse()
 }
 
-func main() {
-	app := App{}
-	app.initialize()
-	app.Run(*addr)
-}
+//func main() {
+//	app := App{}
+//	app.initialize()
+//	app.Run(*addr)
+//}
