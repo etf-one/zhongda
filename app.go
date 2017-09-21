@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -23,9 +24,13 @@ func (a *App) initialize() {
 
 func (a *App) initializeRoutes() {
 
-	a.router.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		fmt.Fprintf(w, "Welcome wefewf")
-	})
+	a.router.HandleFunc("/signup", func(w http.ResponseWriter, req *http.Request) {
+		body, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			panic(err)
+		}
+		log.Println(string(body))
+	}).Methods("POST")
 }
 
 func (a *App) initializeMiddlewares() {
