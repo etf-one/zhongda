@@ -1,29 +1,29 @@
-package main
+package UserController
 
 import (
 	"encoding/json"
 	"net/http"
+
+	e "github.com/etf-one/zhongda/app/http/Errors"
 )
 
-type Signup struct {
+type SignUpInfo struct {
 	Email     string `json:"email"`
 	Password  string `json:"password"`
 	FirstName string `json:"firstName"`
 	Lastname  string `json:"lastname"`
 }
 
-func signup(w http.ResponseWriter, req *http.Request) {
-	var info Signup
+func Signup(w http.ResponseWriter, req *http.Request) {
+	var info SignUpInfo
 	decoder := json.NewDecoder(req.Body)
 	defer req.Body.Close()
 
 	err := decoder.Decode(&info)
 
 	if err != nil {
-		http.Error(w, err.Error(), 400)
-
+		e.ReturnError(w, e.RequestEmptyOrInvalid, err.Error())
 		return
-		//		log.Fatal(err)
 	}
 	w.WriteHeader(200)
 	w.Write([]byte("Successful"))

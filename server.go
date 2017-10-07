@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 
@@ -12,6 +13,13 @@ import (
 	s "github.com/etf-one/zhongda/app/Providers"
 	c "github.com/etf-one/zhongda/config"
 )
+
+var addr *string
+
+func init() {
+	addr = flag.String("addr", ":3001", "Host Address. Default - :3001")
+	flag.Parse()
+}
 
 func main() {
 
@@ -29,5 +37,5 @@ func main() {
 	app.UseHandler(route.New())
 	http.Handle("/", app)
 
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	log.Fatal(http.ListenAndServe(*addr, nil))
 }
